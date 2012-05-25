@@ -76,6 +76,15 @@ implements CAS_ProxiedService_Http
      */
     private $_url;
 
+     /**
+     * The service URL does NOT have to be the same as the target URL
+     *
+     */
+     private $_serviceUrl;
+     public function setServiceUrl($serviceUrl){
+        $this->_serviceUrl = $serviceUrl;
+     }
+
     /**
      * Answer a service identifier (URL) for whom we should fetch a proxy ticket.
      *
@@ -87,7 +96,8 @@ implements CAS_ProxiedService_Http
         if (empty($this->_url)) {
             throw new CAS_ProxiedService_Exception('No URL set via '.get_class($this).'->setUrl($url).');
         }
-
+	if(!empty($this->_serviceUrl))
+		return $this->_serviceUrl;
         return $this->_url;
     }
 
@@ -142,7 +152,7 @@ implements CAS_ProxiedService_Http
 
         // Get our proxy ticket and append it to our URL.
         $this->initializeProxyTicket();
-        $url = $this->getServiceUrl();
+	$url = $this->_url;
         if (strstr($url, '?') === false) {
             $url = $url.'?ticket='.$this->getProxyTicket();
         } else {

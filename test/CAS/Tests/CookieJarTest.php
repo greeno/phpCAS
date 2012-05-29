@@ -894,26 +894,5 @@ class CAS_Tests_CookieJarTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('hello world', $cookies['message']);
     }
 
-    /**
-     * Test matching a domain cookie.
-     *
-     * @return void
-     */
-    public function testProtectedCookieMatchesTargetDomainCookie()
-    {
-        $headers = array(
-            'Set-Cookie: message="hello world"; path=/; domain=.example.com'
-        );
-        $cookies = $this->object
-            ->parseCookieHeaders($headers, 'otherhost.example.com');
-
-        $this->assertTrue(
-            $this->object->cookieMatchesTarget(
-                $cookies[0],
-                parse_url('http://service.example.com/make_changes.php')
-            )
-        );
-    }
-
 }
 ?>

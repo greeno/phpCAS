@@ -160,6 +160,10 @@ implements CAS_Request_RequestInterface
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $this->postBody);
         }
+	if($this->userAgent){
+		curl_setopt($ch, CURLOPT_USERAGENT, $this->userAgent);
+		phpCAS::trace('CURL: Set CURLOPT_USERAGENT'.$this->userAgent);
+	}
 
         return $ch;
     }

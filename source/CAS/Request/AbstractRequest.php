@@ -47,6 +47,7 @@ implements CAS_Request_RequestInterface
     protected $isPost = false;
     protected $postBody = null;
     protected $caCertPath = null;
+    protected $userAgent = null;
     private $_sent = false;
     private $_responseHeaders = array();
     private $_responseBody = null;
@@ -194,6 +195,14 @@ implements CAS_Request_RequestInterface
         }
 
         $this->caCertPath = $caCertPath;
+    }
+
+    public function setUserAgent($userAgent){
+	if ($this->_sent) {
+            throw new CAS_OutOfSequenceException('Request has already been sent cannot '.__METHOD__);
+        }
+
+        $this->userAgent = $userAgent;
     }
 
     /*********************************************************
